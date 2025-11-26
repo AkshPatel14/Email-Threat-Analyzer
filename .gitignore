@@ -1,0 +1,38 @@
+# Windows PowerShell
+@'
+# Byte-compiled / caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Editor / OS files
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+.DS_Store
+
+# Python packaging
+*.egg-info/
+dist/
+build/
+
+# Logs
+*.log
+
+# Secrets
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Optional: large model files (when not using Git LFS)
+# models/*.pkl
+# models/*.h5
+
+'@ | Out-File -Encoding utf8 .gitignore

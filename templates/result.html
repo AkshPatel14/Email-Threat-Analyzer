@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prediction Result — Security Analysis</title>
+  <!-- Load Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Configure Tailwind for a dark, cyber-security aesthetic (copied from index.html) -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'dark-bg': '#111827', // Deep dark blue-gray
+            'card-bg': '#1F2937', // Slightly lighter for card
+            'accent-cyan': '#06B6D4', // Cyan accent for buttons/focus
+            'accent-hover': '#0891B2',
+            'danger': '#DC2626', // Red for errors (Spam)
+            'success': '#10B981', // Green for success (Ham/Not Spam)
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+</head>
+
+<!-- Apply dark mode globally and use the custom font -->
+<body class="bg-dark-bg text-gray-100 min-h-screen flex items-center justify-center p-4 font-sans">
+
+  <main class="w-full max-w-2xl bg-card-bg shadow-2xl rounded-xl p-8 transition-all duration-300">
+    <!-- Header Section -->
+    <header class="text-center mb-8 border-b border-gray-700 pb-4">
+        <h1 class="text-3xl font-bold text-white tracking-tight">Analysis Complete</h1>
+        <p class="text-gray-400 mt-2">Prediction using Logistic Regression Model</p>
+    </header>
+
+    <!-- Results Block -->
+    <section class="results-block mb-6 p-6 rounded-lg border-2 border-accent-cyan bg-gray-800/50">
+      <h2 class="text-xl font-semibold mb-3 text-accent-cyan flex items-center">
+        <!-- Shield icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        Security Analysis Result
+      </h2>
+
+      <!-- Display the result (The color changes based on the prediction category) -->
+      {% set result_lower = result | lower %}
+      {% if 'spam' in result_lower or 'phishing' in result_lower %}
+        {% set color_class = 'bg-danger text-white' %}
+        {% set result_text = '⚠️ Threat Detected (SPAM / MALICIOUS)' %}
+      {% else %}
+        {% set color_class = 'bg-success text-white' %}
+        {% set result_text = '✅ Classification: Safe (HAM)' %}
+      {% endif %}
+
+      <div class="result-single {{ color_class }} p-4 rounded-lg text-2xl font-extrabold text-center shadow-xl">
+        {{ result_text }}
+        <!-- Original result content, if needed: {{ result }} -->
+      </div>
+    </section>
+
+    <!-- Input Message Block -->
+    <section class="message-block mb-8">
+      <h2 class="text-lg font-semibold mb-2 text-gray-300 border-b border-gray-700 pb-1">
+        Input Message Analyzed
+      </h2>
+      <!-- Use monospaced font and dark background for the message preview -->
+      <pre class="message bg-gray-700 text-gray-200 p-4 rounded-lg overflow-x-auto text-sm border border-gray-600">
+{{ message }}
+</pre>
+    </section>
+
+    <!-- Actions -->
+    <p>
+        <a href="{{ url_for('index') }}" class="block text-center py-3 px-4 bg-accent-cyan text-white font-semibold rounded-lg shadow-lg hover:bg-accent-hover transition duration-300 transform hover:scale-[1.01] focus:outline-none focus:ring-4 focus:ring-accent-cyan focus:ring-opacity-50">
+            &larr; Analyze Another Message
+        </a>
+    </p>
+
+    <!-- Footer -->
+    <footer class="mt-8 pt-4 text-center border-t border-gray-700">
+      <small class="text-gray-500">Model: <code class="font-mono text-gray-400">/models/log_reg_model.pkl</code></small>
+    </footer>
+  </main>
+</body>
+</html>
